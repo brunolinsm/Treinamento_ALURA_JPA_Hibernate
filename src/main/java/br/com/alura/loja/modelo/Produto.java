@@ -20,6 +20,9 @@ public class Produto {
     @ManyToOne
     private Categoria categoria;
 
+    public Produto() {
+    } // Construtor padrão necessário para o JPA (Java Persistence API) criar instâncias da classe Produto sem parâmetros.
+
     public Produto(String nome, String descricao, BigDecimal preco, Categoria categoria) {
         this.nome = nome;
         this.descricao = descricao;

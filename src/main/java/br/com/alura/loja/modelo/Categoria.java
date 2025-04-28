@@ -13,6 +13,9 @@ public class Categoria {
     private Long id;
     private String nome;
 
+    public Categoria(){
+    } // Construtor padrão necessário para o JPA (Java Persistence API) criar instâncias da classe Categoria sem parâmetros.
+
     public Categoria(String nome) {
         this.nome = nome;
     }
