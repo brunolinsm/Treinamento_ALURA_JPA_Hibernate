@@ -23,4 +23,5 @@ public class CategoriaDao {
         categoria = em.merge(categoria); // Sincroniza o estado da categoria com o contexto de persistência
         this.em.remove(categoria);
     }
+
 }

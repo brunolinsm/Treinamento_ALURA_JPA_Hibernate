@@ -8,30 +8,33 @@ import br.com.alura.loja.modelo.Produto;
 import br.com.alura.loja.util.JPAUtil;
 import jakarta.persistence.EntityManager;
 import java.math.BigDecimal;
+import java.util.List;
 
 public class CadastroDeProduto {
     public static void main(String[] args) {
+        cadastrarProduto();
+        EntityManager em = JPAUtil.getEntityManager();
+        ProdutoDao produtoDao = new ProdutoDao(em);
+        Produto p = produtoDao.buscarPorId(1L);
+        System.out.println(p.getPreco());
+
+        List<Produto> todos = produtoDao.buscarTodos();
+        todos.forEach(produto -> System.out.println(produto.getNome()));
+    }
+
+    private static void cadastrarProduto() {
         Categoria celulares = new Categoria("CELULARES");
         Produto celular = new Produto("Xiaomi", "Legal", new BigDecimal("800"), celulares);
 
         EntityManager em = JPAUtil.getEntityManager();
-//        ProdutoDao produtoDao = new ProdutoDao(em);
-//        CategoriaDao categoriaDao = new CategoriaDao(em);
+        ProdutoDao produtoDao = new ProdutoDao(em);
+        CategoriaDao categoriaDao = new CategoriaDao(em);
 
         em.getTransaction().begin();
-        em.persist(celulares);
-        celulares.setNome("novo");
-//        produtoDao.cadastrar(celular);
-//        categoriaDao.cadastrar(celulares);
-//        em.getTransaction().commit();
-        em.flush();
-        em.clear(); // Limpa o contexto de persistência
 
-        celulares = em.merge(celulares); // Atualiza a categoria no contexto de persistência
-        celulares.setNome("CELULARES NOVOS");
-        em.flush();
-        em.remove(celulares); // Remove a categoria do contexto de persistência
-        em.flush();
-//        em.close();
+        produtoDao.cadastrar(celular);
+        categoriaDao.cadastrar(celulares);
+        em.getTransaction().commit();
+        em.close();
     }
 }
