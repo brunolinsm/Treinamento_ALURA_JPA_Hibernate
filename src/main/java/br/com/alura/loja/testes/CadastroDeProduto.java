@@ -26,9 +26,11 @@ public class CadastroDeProduto {
 //        em.getTransaction().commit();
         em.flush();
         em.clear(); // Limpa o contexto de persistência
-        
+
         celulares = em.merge(celulares); // Atualiza a categoria no contexto de persistência
         celulares.setNome("CELULARES NOVOS");
+        em.flush();
+        em.remove(celulares); // Remove a categoria do contexto de persistência
         em.flush();
 //        em.close();
     }

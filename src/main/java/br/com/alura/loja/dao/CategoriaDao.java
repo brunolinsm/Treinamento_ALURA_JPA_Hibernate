@@ -18,4 +18,9 @@ public class CategoriaDao {
     public void atualizar(Categoria categoria) {
         this.em.merge(categoria);
     }
+
+    public void remover(Categoria categoria) {
+        categoria = em.merge(categoria); // Sincroniza o estado da categoria com o contexto de persistência
+        this.em.remove(categoria);
+    }
 }
